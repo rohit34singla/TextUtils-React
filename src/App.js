@@ -4,8 +4,7 @@ import About from "./components/About";
 import Navbar from "./components/Navbar";
 import TextForm from "./components/TextForm";
 import Alert from "./components/Alert";
-// import { BrowserRouter as Router, Route} from "react-router-dom";
-// import { Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const [mode, setMode] = useState("light"); // whether dark mode is enabled or not
@@ -20,8 +19,18 @@ function App() {
       setAlert(null);
     }, 2000);
   };
-
-  const toggleMode = () => {
+   
+  const removeBodyClasses = ()=>{
+    document.body.classList.remove('bg-light')
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('bg-warning')
+    document.body.classList.remove('bg-danger')
+    document.body.classList.remove('bg-success')
+  }
+  const toggleMode = (cls) => {
+    removeBodyClasses();
+    console.log(cls)
+    document.body.classList.add('bg-'+cls)
     if (mode === "light") {
       setMode("dark");
       document.body.style.backgroundColor = "grey";
@@ -37,9 +46,10 @@ function App() {
       document.title = "TextUtils - Light Mode";
     }
   };
+  
   return (
     <>
-      {/* <Router> */}
+      <Router>
         <Navbar
           title="TextUtils"
           aboutText="About Us"
@@ -48,21 +58,21 @@ function App() {
         />
         <Alert alert={alert} />
         <div className="container my-3">
-          {/* <Routes>
-            <Route exact path="/about" element={<About />} />
+          <Routes>
+            <Route exact path="/about" element={<About  mode={mode}/>} />
             <Route
               exact path="/"
-              element={ */}
+              element={
                 <TextForm
                   showAlert={showAlert}
-                  heading="Enter the text to analyze below"
+                  heading="Try TextUtils - Word Counter, Character Counter, Remove Extra Spaces"
                   mode={mode}
                 />
-              {/* }
+              }
             />
-          </Routes> */}
+          </Routes>
         </div>
-      {/* </Router> */}
+      </Router>
     </>
   );
 }
